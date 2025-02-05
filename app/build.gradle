@@ -1,0 +1,98 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.plugin.compose'
+    id 'kotlinx-serialization'
+}
+
+android {
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.meh.news"
+        minSdk 29
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "AUTH_KEY", "\"Bearer 8cc31eeea8f4451eaeacefb9719a7b2b\""
+            buildConfigField "String", "BASE_URL", "\"https://newsapi.org/v2/\""
+        }
+        release {
+            buildConfigField "String", "AUTH_KEY", "\"Bearer 8cc31eeea8f4451eaeacefb9719a7b2b\""
+            buildConfigField "String", "BASE_URL", "\"https://newsapi.org/v2/\""
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    namespace 'com.meh.news'
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
+}
+
+dependencies {
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.activity.ktx
+
+    // region Compose
+    def composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+    androidTestImplementation composeBom
+
+    implementation libs.androidx.material3
+    implementation libs.androidx.ui.tooling.preview
+    implementation libs.androidx.navigation.compose
+    debugImplementation libs.androidx.ui.tooling
+
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.hilt.navigation.compose
+    // endregion
+
+    // region Coil
+    implementation libs.coil.compose
+    implementation libs.coil.network.okhttp
+    // endRegion
+
+    // region Hilt
+    implementation libs.hilt.android
+    kapt libs.hilt.android.compiler
+    // endregion
+
+    // region Retrofit
+    implementation libs.retrofit
+    implementation libs.converter.kotlinx.serialization
+    implementation libs.okhttp
+    // endRegion
+
+    // region kotlinx.serialization
+    implementation libs.kotlinx.serialization.json
+    // endRegion
+}

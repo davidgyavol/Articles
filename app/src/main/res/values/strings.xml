@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">News</string>
+    <string name="news_listing_title">News</string>
+    <string name="news_details_title">News</string>
+    <string name="failed_to_load_headlines">Failed to load headlines. Please try again.</string>
+    <string name="failed_to_load_article">Failed to load selected article.</string>
+    <string name="retry">Retry</string>
+    <string name="open_article">Open article</string>
+</resources>
